@@ -67,6 +67,24 @@ concatinv' ys = foldr (:) ys
 concat':: [a]->[a]->[a]
 concat' = flip concatinv' 
 
+mejorSegun::(a->a->Bool)->[a]->a 
+--mejorSegun f (x:[]) = x
+--mejorSegun f (x:xs)= if f x (mejorSegun f xs) then x else mejorSegun f xs 
+
+mejorSegun f = foldr1 (\x recu -> if f x recu then x else recu)
+
+
+--sumasParcialesrev:: Num a=> [a]->[a]
+--sumasParcialesrev (x:[])= [x]
+--sumasParcialesrev (x:xs)= [x+ sum xs ] ++ sumasParcialesrev xs
+
+--sumasParciales xs  = reverse (sumasParcialesrev (reverse xs) )         -- NO ES RECURSION ESTRUCTURAL!! es primitiva
+
+
+sumasParciales ac [] = ac 
+sumasParciales ac (x:xs) = sumasParciales (ac++[(sum ac) + x]) xs
+
+--Es más intuitivo hacerlo con rec iterativa? 
 
 
 
