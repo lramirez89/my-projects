@@ -1,4 +1,3 @@
-import Distribution.Simple.Utils (xargs)
 
 --Ejercicio 1
 max2:: Ord a => (a,a)->a
@@ -81,8 +80,13 @@ mejorSegun f = foldr1 (\x recu -> if f x recu then x else recu)
 --sumasParciales xs  = reverse (sumasParcialesrev (reverse xs) )         -- NO ES RECURSION ESTRUCTURAL!! es primitiva
 
 
-sumasParciales ac [] = ac 
-sumasParciales ac (x:xs) = sumasParciales (ac++[(sum ac) + x]) xs
+sumasParcialesRev ac [] = ac
+sumasParcialesRev [] (x:xs) = sumasParcialesRev  [x] xs 
+sumasParcialesRev ac (x:xs) = sumasParcialesRev ( (x+head ac): ac ) xs
+
+--sumasParciales xs = reverse (sumasParcialesRev [] xs)
+sumasParciales:: Num a=> [a]->[a]
+sumasParciales xs = reverse (foldl (\ac x-> if length ac ==0 then [x] else x+(head ac):ac ) [] xs)
 
 --Es más intuitivo hacerlo con rec iterativa? 
 
