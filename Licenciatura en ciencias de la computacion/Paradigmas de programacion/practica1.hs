@@ -90,15 +90,56 @@ sumasParciales xs = reverse (foldl (\ac x-> if length ac ==0 then [x] else x+(he
 
 --Es más intuitivo hacerlo con rec iterativa? 
 
+sumaAlt :: Num a => [a]-> a
+sumaAlt = foldr (-) 0
+
+sumaAltRev:: Num a => [a] -> a
+sumaAltRev xs |length xs `mod` 2 ==1 = sumaAlt xs
+              |otherwise             = -sumaAlt xs
 
 
+----------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------
+-- Ejercicio 5
 
+elementosEnPosicionesPares :: [a]-> [a] 
+elementosEnPosicionesPares [] = [] 
+elementosEnPosicionesPares (x:xs) = if null xs 
+                                    then [x] 
+                                    else x : elementosEnPosicionesPares (tail xs)
 
+        --no es estructural porque opera con xs? Es primitiva
+        --elementosEnPosicionesPares :: [a] -> [a]
+        --elementosEnPosicionesPares xs = foldr (\(i, x) acc -> if even i then x : acc else acc) [] (zip [0..] xs)
 
+entrelazar :: [a]-> [a]-> [a] 
+entrelazar [] = id 
+entrelazar (x:xs) = \ys-> if null ys 
+                          then x : entrelazar xs [] 
+                          else x : head ys : entrelazar xs (tail ys)
+            --no es estructural, es primitiva porque utiliza xs 
 
+------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-- Ejercicio 6
 
+recr :: (a-> [a]-> b-> b)-> b-> [a]-> b 
+recr _ z [] = z 
+recr f z (x : xs) = f x xs (recr f z xs)
 
+sacarUna :: Eq a => a-> [a]-> [a]
+--sacarUna e [] = []
+--sacarUna e (x:xs) | e==x = xs
+--                  | otherwise = x: sacarUna e xs
 
+sacarUna e = recr (\x xs recu  -> if e==x then xs else x:recu) [] 
+
+insertarOrdenado :: Ord a => a-> [a]-> [a]
+--insertarOrdenado elem []  = [elem]
+--insertarOrdenado elem (x:xs) | elem<=x = elem: (x:xs)
+--                             | otherwise = x: insertarOrdenado elem xs
+
+insertarOrdenado elem = recr (\x xs recu-> if elem<=x then elem:(x:xs) else x:recu) [elem]
 
 
 
