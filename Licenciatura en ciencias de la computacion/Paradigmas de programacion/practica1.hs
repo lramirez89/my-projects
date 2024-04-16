@@ -142,4 +142,32 @@ insertarOrdenado :: Ord a => a-> [a]-> [a]
 insertarOrdenado elem = recr (\x xs recu-> if elem<=x then elem:(x:xs) else x:recu) [elem]
 
 
+---------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+-- Ejercicio 8
 
+mapPares:: (a->b->c) -> [(a,b)] -> [c]
+mapPares f xs = map (uncurry f) xs
+
+--Toma "dos argumentos" y devuelve una lista de tuplas
+--armarPares:: [a]->[b] ->[(a,b)]
+--armarPares xs [] = []
+--armarPares xs (y:ys) | null xs = []
+--                     | otherwise = (head xs, y) : armarPares (tail xs) ys
+
+--Toma una lista y devuelve una funcion que toma por parámetro una lista y devuelve una lista de tuplas
+armarPares:: [a]->[b] ->[(a,b)]
+--armarPares [] = const []
+--armarPares (x:xs) = (\ys -> if null ys then [] else (x,head ys): armarPares xs (tail ys) )
+
+armarPares = foldr (\x recu-> (\ys-> if null ys then [] else (x,head ys):recu (tail ys)))   (const [])
+                    --aprovechando la currificacion se puede escribir como un lambda que tome tres paranetros x recu ys
+
+--Transformo a f e una funcion que tome un solo artumento (dupla) y aplico a las duplas armadas mediante zip
+mapDoble:: (a->b->c) -> [a] -> [b] -> [c]
+mapDoble f xs ys = map (uncurry f) (zip xs ys)
+
+
+------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+-- Ejercicio 10
