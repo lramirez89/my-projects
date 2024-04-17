@@ -171,3 +171,48 @@ mapDoble f xs ys = map (uncurry f) (zip xs ys)
 ------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 -- Ejercicio 10
+
+generate :: ([a]-> Bool)-> ([a]-> a)-> [a] 
+generate stop next = generateFrom stop next [] 
+
+generateFrom:: ([a]-> Bool)-> ([a]-> a)-> [a]-> [a] 
+generateFrom stop next xs | stop xs = init xs 
+                          | otherwise = generateFrom stop next (xs ++ [next xs])
+
+--esete no salió
+--generateFrom stop next xs =  takeWhile stop (concat (iterate (\xs -> [next xs])  [] ) ) 
+
+generateBase::([a]-> Bool)-> a-> (a-> a)-> [a]
+generateBase stop casoBase next = generate stop (\xs -> if null xs then casoBase else next (last xs) )
+
+potencias2  n = generateBase (\xs -> length xs == n) 2 (\x -> x*2 ) 
+pot2menores256= generateBase (\l->not(null l )&& (last l > 256))1(*2) 
+
+factoriales n = generate (\xs -> length xs == n ) (\xs -> if null xs then 1 else last xs * length xs )
+
+iterateN :: Int-> (a-> a)-> a-> [a]
+iterateN n f x = generateBase (\xs -> length xs == n+1 ) x (\elem -> f elem) 
+
+--implementacion de iterateN dada en la guia de ejercicios
+--iterateN n f x = take n (iterate f x)
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------
+-- Ejercicio 11
+foldNat:: (Integer->Integer) -> Integer -> Integer -> Integer
+foldNat f b 0 = b
+foldNat f b n = f (foldNat f b (n-1))
+
+--potencia a 1 = a
+--potencia a n = potencia a (n-1) * a 
+
+potencia a = foldNat (\recu-> recu*a) 1
+
+
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+-- Ejercicio 13
+data AB a = Nil | Bin (AB a) a (AB a)
+
+--foldAB 
