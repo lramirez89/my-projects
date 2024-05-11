@@ -3,8 +3,21 @@
 #include <tuple>
 
 using namespace std;
+using VectorVector = vector <vector<int>>;
+using coord = tuple<int,int>;
 
 int MENOSINF = -1;
+
+/* De un vector de vector de tuplas(ordenados) de ints, devuelvo una tripla:
+    res<0> posicion en bosque (indice de la lista externa e interna)
+    res<1> valor de la segunda coordenada (cantidad de bellotas)
+ */
+tuple< coord, int >  masGrande( vector< vector< coord >  > bosque& ){
+    coord res= make_tuple( make_tuple(0, bosque[0].size()-1) , bosque[0][bosque[0].size()-1] );    
+
+   
+}
+
 
 /* Expreso cada árbol como una tupla (altura, cantBellotas) , cantidad de bellotas en la atura <0>
 */
@@ -41,7 +54,9 @@ int mcorn(vector<vector<int> > lisBellotas){
         cantMaxBellotas= arbol.size();
     }
 
-    int memo[][];
+    vector< vector<int>> memo = vector<vector<int>>( cantMaxBellotas, vector<int>(cantArbol, MENOSINF) );
+
+
 
 
 
