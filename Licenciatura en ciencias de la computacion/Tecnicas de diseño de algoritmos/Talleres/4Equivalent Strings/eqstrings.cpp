@@ -31,29 +31,11 @@ bool sonEquovalentes(string &s1,  int i1, int j1, string &s2, int i2, int j2){
         return true;
 
     //si no son iguales veo si ambas mitades son equivalentes
-    if(j1-i1 % 2 == 1)
+    if((j1-i1) % 2 == 1)
         return false;
 
-    bool res1 =  sonEquovalentes(s1, i1, (i1+j1)/2, s2, i2, (i2+j2)/2);
-
-    if(res1){
-        bool res2 =  sonEquovalentes(s1, (i1+j1)/2, j1,s2, (i2+j2)/2, j2);
-
-        if(res2) return true;
-    }
-
-    //si llego hasta acá no es cierto que a1=b1 y a2=b2 . Veo el otro caso
-    
-    res1 =  sonEquovalentes(s1, i1, (i1+j1)/2, s2, (i2+j2)/2, j2);
-
-    if(res1){
-        bool res2 =  sonEquovalentes(s1, (i1+j1)/2, j1, s2, i2, (i2+j2)/2);
-
-        if(res2) return true;
-    }
-    
-    //si llego hasta acá no se cumple ninguno de los dos casos
-    return false;
+    return (sonEquovalentes(s1, i1, (i1+j1)/2, s2, i2, (i2+j2)/2) && sonEquovalentes(s1, (i1+j1)/2, j1,s2, (i2+j2)/2, j2) )
+    || ( sonEquovalentes(s1, i1, (i1+j1)/2, s2, (i2+j2)/2, j2) && sonEquovalentes(s1, (i1+j1)/2, j1, s2, i2, (i2+j2)/2)  );
 
 }
 
