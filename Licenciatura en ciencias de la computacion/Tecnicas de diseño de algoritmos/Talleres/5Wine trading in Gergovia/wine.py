@@ -30,7 +30,7 @@ while not compradores.empty() or not vendedores.empty():
     #si el comprador quiere mas de lo que puedo vender
     if cantComp>cantVend:
         costo_total += cantVend*abs(posComp-posVend)
-        cantComp -= cantVend;
+        cantComp -= cantVend
         posVend, cantVend = vendedores.get()        
         continue
     
@@ -44,7 +44,7 @@ while not compradores.empty() or not vendedores.empty():
     
     #caso se pueden vender la cantidad exacta
     if cantComp==cantVend:
-        costo_total += cantComp*(posComp-posVend)
+        costo_total += cantComp*abs(posComp-posVend)
         posComp, cantComp = compradores.get()
         posVend, cantVend = vendedores.get()
         continue
